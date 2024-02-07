@@ -1,0 +1,10 @@
+.scribble-root-container {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  z-index: 9999;
+  border: 1px solid black;
+  border-radius: 1rem;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  font-family: Arial, sans-serif;
+}

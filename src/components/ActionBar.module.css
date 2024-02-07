@@ -3,6 +3,7 @@
   padding: 1rem;
   background-color: white;
 }
+
 .icons {
   display: flex;
   align-items: center;
@@ -17,4 +18,8 @@
 .icon {
   font-size: 1.5rem;
   cursor: pointer;
+}
+
+.active {
+  color: #ff0000;
 }

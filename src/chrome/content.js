@@ -1,4 +1,3 @@
-alert('Hello from your Chrome extension!');
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Popup } from '../popup.jsx';

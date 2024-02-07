@@ -8,5 +8,3 @@ export function Popup() {
         </main >
     )
 }
-
-// render(<Popup />, document.getElementById("popup-root"));

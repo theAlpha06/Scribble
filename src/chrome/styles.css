@@ -1,5 +1,5 @@
 .scribble-root-container {
-  position: absolute;
+  position: fixed;
   top: 20px;
   right: 20px;
   z-index: 9999;
@@ -11,3 +11,13 @@
   width: 180px;
   height: 65px;
 }
+
+.scrible-container-write {
+  position: absolute;
+  z-index: 9998;
+  width: 100vw;
+  height: 100vh;
+  background-color: transparent;
+  cursor: pointer;
+}
+

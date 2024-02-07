@@ -1,0 +1,19 @@
+.action_bar {
+  border-radius: 1rem;
+  padding: 1rem;
+  background-color: white;
+}
+.icons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  list-style: none;
+  gap: 1rem;
+  margin: 0;
+  padding: 0;
+}
+
+.icon {
+  font-size: 1.5rem;
+}

@@ -5,7 +5,7 @@ import ActionBar from "./components/ActionBar.jsx";
 
 function Popup() {
     return (
-        <main className="container" draggable="true">
+        <main className="container">
             <ActionBar />
         </main >
     )

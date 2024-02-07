@@ -1,16 +1,23 @@
 import React from "react";
-import './ActionBar.css';
+import classes from './ActionBar.module.css';
 import { FaPen, FaMouse, FaEraser } from "react-icons/fa";
+import { IoExit } from "react-icons/io5";
 
 const ActionBar = () => {
+
+  const handleExit = () => {
+    const actionContainer = document.getElementById('scrible-root-container');
+    actionContainer.remove();
+  }
   return (
-      <div className='action_bar'>
-        <ul className='icons'>
-          <li className='icon'><FaPen /></li>
-          <li className='icon'><FaMouse /></li>
-          <li className='icon'><FaEraser /></li>
-        </ul>
-      </div>
+    <div className={classes.action_bar}>
+      <ul className={classes.icons}>
+        <li className={classes.icon}><FaPen /></li>
+        <li className={classes.icon}><FaMouse /></li>
+        <li className={classes.icon}><FaEraser /></li>
+        <li onClick={handleExit} className={classes.icon}><IoExit /></li>
+      </ul>
+    </div>
   )
 }
 

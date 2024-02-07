@@ -6,94 +6,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <style>
-        .draggable {
-            width: 100px;
-            height: 100px;
-            background-color: lightblue;
-            border: 1px solid black;
-            cursor: move;
-            position: absolute;
-        }
-    </style>
 </head>
 
 <body>
-    <div id="popup-root" class="draggable"></div>
-    <script>
-        const draggableElement = document.getElementById('popup-root');
-        let offsetX, offsetY, isDragging = false;
-      
-        draggableElement.addEventListener('mousedown', (event) => {
-          isDragging = true;
-          const boundingRect = draggableElement.getBoundingClientRect();
-          offsetX = event.clientX - boundingRect.left;
-          offsetY = event.clientY - boundingRect.top;
-        });
-      
-        document.addEventListener('mousemove', (event) => {
-          if (isDragging) {
-            const x = event.clientX - offsetX;
-            const y = event.clientY - offsetY;
-            draggableElement.style.left = x + 'px';
-            draggableElement.style.top = y + 'px';
-          }
-        });
-      
-        document.addEventListener('mouseup', () => {
-          isDragging = false;
-        });
-      </script>
+    <div id="popup-root"></div>
     <script src="./popup.js"></script>
 </body>
 
 </html>
-
-<!-- <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Draggable Div</title>
-  <style>
-    .draggable {
-      width: 100px;
-      height: 100px;
-      background-color: lightblue;
-      border: 1px solid black;
-      cursor: move;
-      position: absolute;
-    }
-  </style>
-</head>
-<body>
-
-<div id="draggable" class="draggable">Drag me!</div>
-
-<script>
-  const draggableElement = document.getElementById('draggable');
-  let offsetX, offsetY, isDragging = false;
-
-  draggableElement.addEventListener('mousedown', (event) => {
-    isDragging = true;
-    const boundingRect = draggableElement.getBoundingClientRect();
-    offsetX = event.clientX - boundingRect.left;
-    offsetY = event.clientY - boundingRect.top;
-  });
-
-  document.addEventListener('mousemove', (event) => {
-    if (isDragging) {
-      const x = event.clientX - offsetX;
-      const y = event.clientY - offsetY;
-      draggableElement.style.left = x + 'px';
-      draggableElement.style.top = y + 'px';
-    }
-  });
-
-  document.addEventListener('mouseup', () => {
-    isDragging = false;
-  });
-</script>
-
-</body>
-</html> -->

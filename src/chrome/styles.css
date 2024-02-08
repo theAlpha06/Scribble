@@ -12,12 +12,15 @@
   height: 62px;
 }
 
-.scrible-container-write {
+#scrible-root-container_canvas {
   position: absolute;
-  z-index: 9998;
-  width: 100vw;
-  height: 100vh;
+  z-index: 9997;
   background-color: transparent;
-  cursor: pointer;
+}
+.cursor {
+  pointer-events: none;
 }
 
+.pen {
+  pointer-events: auto;
+}

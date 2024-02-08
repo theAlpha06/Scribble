@@ -9,6 +9,11 @@ containerDiv.id = 'scrible-root-container';
 containerDiv.classList = 'scribble-root-container';
 document.body.appendChild(containerDiv);
 
+const canvasDiv = document.createElement('canvas');
+canvasDiv.id = 'scrible-root-container_canvas';
+canvasDiv.classList = 'cursor';
+document.body.insertBefore(canvasDiv, document.body.firstChild);
+
 let isDragging = false;
 let offsetX, offsetY;
 

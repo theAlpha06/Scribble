@@ -6,7 +6,7 @@ import { IoExit } from "react-icons/io5";
 import CanvasComponent from "./Pen.jsx";
 
 const ActionBar = () => {
-  
+
   const [isActive, setIsActive] = useState('mouse_icon');
 
 
@@ -15,8 +15,13 @@ const ActionBar = () => {
     const canvas = document.getElementById('scrible-root-container_canvas');
     canvas.style.cursor = 'crosshair';
     canvas.classList = 'eraser';
-    const ctx = canvas.getContext('2d');
 
+    // canvas.removeEventListener("mousedown", startPosition);
+    // canvas.removeEventListener("mouseup", endPosition);
+    // canvas.removeEventListener("mousemove", draw);
+
+    const ctx = canvas.getContext('2d');
+    ctx.lineWidth = 10;
     ctx.beginPath();
     ctx.rect(0, 0, canvas.width, canvas.height);
     ctx.clip();
@@ -42,7 +47,6 @@ const ActionBar = () => {
 
       ctx.lineTo(x, y);
       ctx.stroke();
-      ctx.lineWidth = 10;
     };
 
     canvas.addEventListener("mousedown", startPosition);
@@ -66,7 +70,6 @@ const ActionBar = () => {
   const mouseClick = () => {
     const canvas = document.getElementById('scrible-root-container_canvas');
     if (canvas) {
-      canvas.style.cursor = 'default';
       canvas.classList = 'cursor';
     }
     setIsActive('mouse_icon');
@@ -80,7 +83,7 @@ const ActionBar = () => {
         <li className={`${classes.icon} ${isActive === 'pen_icon' ? classes.active : ''}`} title="Pen">
           <CanvasComponent setIsActive={setIsActive} />
         </li>
-        <li className={`${classes.icon} ${isActive === 'mouse_icon' ? classes.active : ''}`} onClick={mouseClick}><FaMouse /></li>
+        <li className={`${classes.icon} ${isActive === 'mouse_icon' ? classes.active : ''}`} onClick={mouseClick} title="Mouse"><FaMouse /></li>
         <li className={`${classes.icon} ${isActive === 'eraser_icon' ? classes.active : ''}`} onClick={eraseOnCanvas} title="Eraser"><FaEraser /></li>
         <li className={classes.icon} onClick={clearCanvas} title="Clear Canvas"><MdDelete /></li>
         <li onClick={handleExit} className={classes.icon} title="Exit"><IoExit /></li>

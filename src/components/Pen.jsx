@@ -10,6 +10,10 @@ const Pen = ({ setIsActive }) => {
     canvas.classList = 'pen';
     if (canvas) {
 
+      // canvas.removeEventListener("mousedown", startPosition);
+      // canvas.removeEventListener("mouseup", endPosition);
+      // canvas.removeEventListener("mousemove", draw);
+
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
 
@@ -18,7 +22,6 @@ const Pen = ({ setIsActive }) => {
       ctx.lineWidth = 2;
       ctx.lineCap = "round";
       let isDrawing = false;
-
       const startPosition = (e) => {
         isDrawing = true;
         draw(e);

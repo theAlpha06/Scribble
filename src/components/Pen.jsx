@@ -6,7 +6,7 @@ const Pen = ({ setIsActive }) => {
   const penInput = () => {
     setIsActive('pen_icon');
     const canvas = document.getElementById('scrible-root-container_canvas');
-    canvas.style.cursor = 'crosshair';
+    canvas.style.cursor = 'pointer';
     canvas.classList = 'pen';
     if (canvas) {
 

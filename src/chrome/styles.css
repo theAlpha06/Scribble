@@ -21,6 +21,6 @@
   pointer-events: none;
 }
 
-.pen {
+.pen, .eraser {
   pointer-events: auto;
 }

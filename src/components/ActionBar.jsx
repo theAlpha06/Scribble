@@ -13,6 +13,8 @@ const ActionBar = () => {
   const eraseOnCanvas = () => {
     setIsActive('eraser_icon');
     const canvas = document.getElementById('scrible-root-container_canvas');
+    canvas.style.cursor = 'crosshair';
+    canvas.classList = 'eraser';
     const ctx = canvas.getContext('2d');
 
     ctx.beginPath();

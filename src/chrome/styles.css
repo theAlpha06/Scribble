@@ -10,6 +10,7 @@
   cursor: move;
   width: 210px;
   height: 62px;
+  color: black;
 }
 
 #scrible-root-container_canvas {

@@ -8,17 +8,12 @@ import CanvasComponent from "./Pen.jsx";
 const ActionBar = () => {
 
   const [isActive, setIsActive] = useState('mouse_icon');
-
+  const canvas = document.getElementById('scrible-root-container_canvas');
 
   const eraseOnCanvas = () => {
     setIsActive('eraser_icon');
-    const canvas = document.getElementById('scrible-root-container_canvas');
     canvas.style.cursor = 'crosshair';
     canvas.classList = 'eraser';
-
-    // canvas.removeEventListener("mousedown", startPosition);
-    // canvas.removeEventListener("mouseup", endPosition);
-    // canvas.removeEventListener("mousemove", draw);
 
     const ctx = canvas.getContext('2d');
     ctx.lineWidth = 10;
@@ -44,15 +39,16 @@ const ActionBar = () => {
       const rect = canvas.getBoundingClientRect();
       const x = e.clientX - rect.left;
       const y = e.clientY - rect.top;
-
+      console.log(x, y);
       ctx.lineTo(x, y);
       ctx.stroke();
     };
 
+
     canvas.addEventListener("mousedown", startPosition);
     canvas.addEventListener("mouseup", endPosition);
     canvas.addEventListener("mousemove", draw);
-  };
+  }
 
   const handleExit = () => {
     const actionContainer = document.getElementById('scrible-root-container');

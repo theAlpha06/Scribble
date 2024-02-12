@@ -11,7 +11,8 @@ document.body.appendChild(containerDiv);
 
 const canvasDiv = document.createElement('canvas');
 canvasDiv.id = 'scrible-root-container_canvas';
-canvasDiv.classList = 'cursor';
+canvasDiv.width = window.innerWidth;
+canvasDiv.height = window.innerHeight;
 document.body.insertBefore(canvasDiv, document.body.firstChild);
 
 let isDragging = false;

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { FaPen } from "react-icons/fa";
 
 const Pen = ({ setIsActive }) => {
@@ -8,6 +8,7 @@ const Pen = ({ setIsActive }) => {
     const canvas = document.getElementById('scrible-root-container_canvas');
 
     if (canvas) {
+
       canvas.style.cursor = 'pointer';
       canvas.classList = 'pen';
 
@@ -17,17 +18,28 @@ const Pen = ({ setIsActive }) => {
       ctx.lineWidth = 2;
       ctx.lineCap = "round";
       let isDrawing = false;
-      const draw = (e) => {
-        if (!isDrawing) return;
-        ctx.strokeStyle = "green";
-        ctx.lineTo(e.clientX, e.clientY);
-        ctx.stroke();
-        ctx.beginPath();
-        ctx.moveTo(e.clientX, e.clientY);
-      };
+      let x, y;
+      const rect = canvas.getBoundingClientRect();
       const startPosition = (e) => {
         isDrawing = true;
+
+        x = e.clientX - rect.left;
+        y = e.clientY - rect.top;
+        ctx.moveTo(x, y);
         draw(e);
+      };
+
+      const draw = (e) => {
+        if (!isDrawing) return;
+
+        x = e.clientX - rect.left;
+        y = e.clientY - rect.top;
+
+        ctx.strokeStyle = "green";
+        ctx.lineTo(x, y);
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.moveTo(x, y);
       };
 
       const endPosition = () => {

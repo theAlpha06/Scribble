@@ -16,16 +16,22 @@ const ActionBar = () => {
     canvas.classList = 'eraser';
 
     const ctx = canvas.getContext('2d');
-    ctx.lineWidth = 10;
+    ctx.lineWidth = 40;
     ctx.beginPath();
     ctx.rect(0, 0, canvas.width, canvas.height);
+    ctx.lineCap = "square";
     ctx.clip();
     ctx.globalCompositeOperation = 'destination-out';
 
     let isDrawing = false;
-
+    let x, y;
     const startPosition = (e) => {
       isDrawing = true;
+
+      const rect = canvas.getBoundingClientRect();
+      x = e.clientX - rect.left;
+      y = e.clientY - rect.top;
+      ctx.moveTo(x, y);
       draw(e);
     };
 
@@ -37,9 +43,8 @@ const ActionBar = () => {
       if (!isDrawing) return;
 
       const rect = canvas.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
-      console.log(x, y);
+      x = e.clientX - rect.left;
+      y = e.clientY - rect.top;
       ctx.lineTo(x, y);
       ctx.stroke();
     };

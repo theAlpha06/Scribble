@@ -4,6 +4,7 @@ import { FaMouse, FaEraser } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
 import { IoExit } from "react-icons/io5";
 import CanvasComponent from "./Pen.jsx";
+import { iconsUrl } from "./icon.js";
 
 const ActionBar = () => {
 
@@ -12,11 +13,11 @@ const ActionBar = () => {
 
   const eraseOnCanvas = () => {
     setIsActive('eraser_icon');
-    canvas.style.cursor = 'crosshair';
+    canvas.style.cursor = `url(${iconsUrl.eraser}) 17 17, auto`;
     canvas.classList = 'eraser';
 
     const ctx = canvas.getContext('2d');
-    ctx.lineWidth = 40;
+    ctx.lineWidth = 30;
     ctx.beginPath();
     ctx.rect(0, 0, canvas.width, canvas.height);
     ctx.lineCap = "square";

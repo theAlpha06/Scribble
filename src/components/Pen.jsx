@@ -1,5 +1,6 @@
 import React from "react";
 import { FaPen } from "react-icons/fa";
+import { iconsUrl } from "./icon.js";
 
 const Pen = ({ setIsActive }) => {
 
@@ -9,7 +10,7 @@ const Pen = ({ setIsActive }) => {
 
     if (canvas) {
 
-      canvas.style.cursor = 'pointer';
+    canvas.style.cursor = `url(${iconsUrl.pen}) 0 19, auto`;
       canvas.classList = 'pen';
 
       const ctx = canvas.getContext("2d");
@@ -47,7 +48,7 @@ const Pen = ({ setIsActive }) => {
         ctx.beginPath();
       };
 
-      // Add event listeners
+      
       canvas.addEventListener("mousedown", startPosition);
       canvas.addEventListener("mouseup", endPosition);
       canvas.addEventListener("mousemove", draw);

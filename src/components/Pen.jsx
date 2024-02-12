@@ -10,7 +10,7 @@ const Pen = ({ setIsActive }) => {
 
     if (canvas) {
 
-    canvas.style.cursor = `url(${iconsUrl.pen}) 0 19, auto`;
+    canvas.style.cursor = `url(${iconsUrl.pen}) 0 35, auto`;
       canvas.classList = 'pen';
 
       const ctx = canvas.getContext("2d");

@@ -5,6 +5,7 @@ import { MdDelete } from "react-icons/md";
 import { IoExit } from "react-icons/io5";
 import CanvasComponent from "./Pen.jsx";
 import { iconsUrl } from "./icon.js";
+import ColorPalette from "./ColorPalette/ColorPalette.jsx";
 
 const ActionBar = () => {
 
@@ -89,6 +90,9 @@ const ActionBar = () => {
         <li className={`${classes.icon} ${isActive === 'eraser_icon' ? classes.active : ''}`} onClick={eraseOnCanvas} title="Eraser"><FaEraser /></li>
         <li className={classes.icon} onClick={clearCanvas} title="Clear Canvas"><MdDelete /></li>
         <li onClick={handleExit} className={classes.icon} title="Exit"><IoExit /></li>
+        <li>
+          <ColorPalette />
+        </li>
       </ul>
     </div>
   )

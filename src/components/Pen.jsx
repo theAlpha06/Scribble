@@ -1,31 +1,31 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import { FaPen } from "react-icons/fa";
 import { iconsUrl } from "./icon.js";
+import { ColorContext } from "../context/colorContext.jsx";
 
 const Pen = ({ setIsActive }) => {
+  const { colorName } = useContext(ColorContext);
 
-  const penInput = () => {
-    setIsActive('pen_icon');
+  const setupCanvas = () => {
     const canvas = document.getElementById('scrible-root-container_canvas');
-
+    
     if (canvas) {
-
-    canvas.style.cursor = `url(${iconsUrl.pen}) 0 35, auto`;
+      canvas.style.cursor = `url(${iconsUrl.pen}) 0 35, auto`;
       canvas.classList = 'pen';
 
       const ctx = canvas.getContext("2d");
-      ctx.strokeStyle = "green";
-      ctx.globalCompositeOperation = 'source-over';
       ctx.lineWidth = 2;
       ctx.lineCap = "round";
+      ctx.strokeStyle = colorName; 
       let isDrawing = false;
       let x, y;
       const rect = canvas.getBoundingClientRect();
+
       const startPosition = (e) => {
         isDrawing = true;
-
         x = e.clientX - rect.left;
         y = e.clientY - rect.top;
+        ctx.beginPath();
         ctx.moveTo(x, y);
         draw(e);
       };
@@ -36,11 +36,9 @@ const Pen = ({ setIsActive }) => {
         x = e.clientX - rect.left;
         y = e.clientY - rect.top;
 
-        ctx.strokeStyle = "green";
+        ctx.strokeStyle = colorName; 
         ctx.lineTo(x, y);
         ctx.stroke();
-        ctx.beginPath();
-        ctx.moveTo(x, y);
       };
 
       const endPosition = () => {
@@ -48,14 +46,29 @@ const Pen = ({ setIsActive }) => {
         ctx.beginPath();
       };
 
-      
       canvas.addEventListener("mousedown", startPosition);
       canvas.addEventListener("mouseup", endPosition);
       canvas.addEventListener("mousemove", draw);
+
+      return () => {
+        canvas.removeEventListener("mousedown", startPosition);
+        canvas.removeEventListener("mouseup", endPosition);
+        canvas.removeEventListener("mousemove", draw);
+      };
     }
   };
 
-  return <FaPen onClick={penInput} />;
+  useEffect(() => {
+    const cleanup = setupCanvas();
+
+    return cleanup;
+  }, [colorName]); 
+
+  const handlePenClick = () => {
+    setIsActive('pen_icon');
+  };
+
+  return <FaPen onClick={handlePenClick} />;
 };
 
 export default Pen;

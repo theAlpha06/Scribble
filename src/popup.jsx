@@ -1,10 +1,13 @@
 import React from "react";
 import ActionBar from "./components/ActionBar.jsx";
+import { ColorProvider } from "./context/colorContext.jsx";
 
 export function Popup() {
-    return (
-        <main>
-            <ActionBar />
-        </main >
-    )
+  return (
+    <ColorProvider>
+      <main>
+        <ActionBar />
+      </main>
+    </ColorProvider>
+  );
 }

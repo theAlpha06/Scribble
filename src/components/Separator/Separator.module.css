@@ -1,8 +1,7 @@
-.separator {
-  width: 1px;
-  height: 40px;
-  margin: 0 10px;
-  background-color: grey;
-  border: 1px solid grey;
-  font-weight: bolder;
+ .separator {
+  width: 3px; 
+  height: 40px; 
+  background: linear-gradient(90deg, transparent, #0f0f0f, transparent);
+  border-radius: 50% / 100%; 
+  margin: 0 10px; 
 }

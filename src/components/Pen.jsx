@@ -61,9 +61,7 @@ const Pen = ({ setIsActive }) => {
   };
 
   useEffect(() => {
-    const cleanup = setupCanvas();
-
-    return cleanup;
+    return setupCanvas();
   }, [colorName]);
 
   return <FaPen onClick={setupCanvas} />;

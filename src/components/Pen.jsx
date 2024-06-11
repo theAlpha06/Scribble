@@ -4,10 +4,12 @@ import { iconsUrl } from "./icon.js";
 import { ColorContext } from "../context/colorContext.jsx";
 
 const Pen = ({ setIsActive }) => {
+  setIsActive('pen_icon');
   const { colorName } = useContext(ColorContext);
 
+  const canvas = document.getElementById('scrible-root-container_canvas');
+
   const setupCanvas = () => {
-    const canvas = document.getElementById('scrible-root-container_canvas');
     
     if (canvas) {
       canvas.style.cursor = `url(${iconsUrl.pen}) 0 35, auto`;
@@ -17,6 +19,7 @@ const Pen = ({ setIsActive }) => {
       ctx.lineWidth = 2;
       ctx.lineCap = "round";
       ctx.strokeStyle = colorName; 
+      ctx.globalCompositeOperation = 'source-over';
       let isDrawing = false;
       let x, y;
       const rect = canvas.getBoundingClientRect();
@@ -64,11 +67,8 @@ const Pen = ({ setIsActive }) => {
     return cleanup;
   }, [colorName]); 
 
-  const handlePenClick = () => {
-    setIsActive('pen_icon');
-  };
-
-  return <FaPen onClick={handlePenClick} />;
+  
+  return <FaPen onClick={setupCanvas} />;
 };
 
 export default Pen;

@@ -49,12 +49,20 @@ const ActionBar = () => {
       y = e.clientY - rect.top;
       ctx.lineTo(x, y);
       ctx.stroke();
+      
     };
-
 
     canvas.addEventListener("mousedown", startPosition);
     canvas.addEventListener("mouseup", endPosition);
     canvas.addEventListener("mousemove", draw);
+
+    const cleanup = () => {
+      canvas.removeEventListener("mousedown", startPosition);
+      canvas.removeEventListener("mouseup", endPosition);
+      canvas.removeEventListener("mousemove", draw);
+    };
+
+    return cleanup;
   }
 
   const handleExit = () => {
@@ -77,8 +85,6 @@ const ActionBar = () => {
     }
     setIsActive('mouse_icon');
   }
-
-
 
   return (
     <div className={classes.action_bar}>

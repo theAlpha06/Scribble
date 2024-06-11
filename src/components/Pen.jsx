@@ -4,22 +4,21 @@ import { iconsUrl } from "./icon.js";
 import { ColorContext } from "../context/colorContext.jsx";
 
 const Pen = ({ setIsActive }) => {
-  setIsActive('pen_icon');
   const { colorName } = useContext(ColorContext);
 
-  const canvas = document.getElementById('scrible-root-container_canvas');
+  const canvas = document.getElementById("scrible-root-container_canvas");
 
   const setupCanvas = () => {
-    
+    setIsActive("pen_icon");
     if (canvas) {
       canvas.style.cursor = `url(${iconsUrl.pen}) 0 35, auto`;
-      canvas.classList = 'pen';
+      canvas.classList = "pen";
 
       const ctx = canvas.getContext("2d");
       ctx.lineWidth = 2;
       ctx.lineCap = "round";
-      ctx.strokeStyle = colorName; 
-      ctx.globalCompositeOperation = 'source-over';
+      ctx.strokeStyle = colorName;
+      ctx.globalCompositeOperation = "source-over";
       let isDrawing = false;
       let x, y;
       const rect = canvas.getBoundingClientRect();
@@ -39,7 +38,7 @@ const Pen = ({ setIsActive }) => {
         x = e.clientX - rect.left;
         y = e.clientY - rect.top;
 
-        ctx.strokeStyle = colorName; 
+        ctx.strokeStyle = colorName;
         ctx.lineTo(x, y);
         ctx.stroke();
       };
@@ -65,9 +64,8 @@ const Pen = ({ setIsActive }) => {
     const cleanup = setupCanvas();
 
     return cleanup;
-  }, [colorName]); 
+  }, [colorName]);
 
-  
   return <FaPen onClick={setupCanvas} />;
 };
 

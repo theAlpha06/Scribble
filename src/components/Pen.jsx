@@ -6,9 +6,9 @@ import { ColorContext } from "../context/colorContext.jsx";
 const Pen = ({ setIsActive }) => {
   const { colorName } = useContext(ColorContext);
 
-  const canvas = document.getElementById("scrible-root-container_canvas");
-
   const setupCanvas = () => {
+    const canvas = document.getElementById("scrible-root-container_canvas");
+
     setIsActive("pen_icon");
     if (canvas) {
       canvas.style.cursor = `url(${iconsUrl.pen}) 0 35, auto`;

@@ -1,6 +1,8 @@
 .separator {
   width: 1px;
   height: 40px;
-  background-color: black;
   margin: 0 10px;
+  background-color: grey;
+  border: 1px solid grey;
+  font-weight: bolder;
 }

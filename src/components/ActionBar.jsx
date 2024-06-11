@@ -1,29 +1,29 @@
 import React, { useState } from "react";
-import classes from './ActionBar.module.css';
+import classes from "./ActionBar.module.css";
 import { FaMouse, FaEraser } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
 import { IoExit } from "react-icons/io5";
 import CanvasComponent from "./Pen.jsx";
 import { iconsUrl } from "./icon.js";
 import ColorPalette from "./ColorPalette/ColorPalette.jsx";
+import Separator from "./Separator/Separator.jsx";
 
 const ActionBar = () => {
-
-  const [isActive, setIsActive] = useState('mouse_icon');
-  const canvas = document.getElementById('scrible-root-container_canvas');
+  const [isActive, setIsActive] = useState("mouse_icon");
+  const canvas = document.getElementById("scrible-root-container_canvas");
 
   const eraseOnCanvas = () => {
-    setIsActive('eraser_icon');
+    setIsActive("eraser_icon");
     canvas.style.cursor = `url(${iconsUrl.eraser}) 17 17, auto`;
-    canvas.classList = 'eraser';
+    canvas.classList = "eraser";
 
-    const ctx = canvas.getContext('2d');
+    const ctx = canvas.getContext("2d");
     ctx.lineWidth = 30;
     ctx.beginPath();
     ctx.rect(0, 0, canvas.width, canvas.height);
     ctx.lineCap = "square";
     ctx.clip();
-    ctx.globalCompositeOperation = 'destination-out';
+    ctx.globalCompositeOperation = "destination-out";
 
     let isDrawing = false;
     let x, y;
@@ -49,7 +49,6 @@ const ActionBar = () => {
       y = e.clientY - rect.top;
       ctx.lineTo(x, y);
       ctx.stroke();
-      
     };
 
     canvas.addEventListener("mousedown", startPosition);
@@ -63,45 +62,86 @@ const ActionBar = () => {
     };
 
     return cleanup;
-  }
+  };
 
   const handleExit = () => {
-    const actionContainer = document.getElementById('scrible-root-container');
-    const canvas = document.getElementById('scrible-root-container_canvas');
+    const actionContainer = document.getElementById("scrible-root-container");
+    const canvas = document.getElementById("scrible-root-container_canvas");
     canvas?.remove();
     actionContainer?.remove();
-  }
+  };
 
   const clearCanvas = () => {
-    const canvas = document.getElementById('scrible-root-container_canvas');
-    const ctx = canvas?.getContext('2d');
+    const canvas = document.getElementById("scrible-root-container_canvas");
+    const ctx = canvas?.getContext("2d");
     ctx?.clearRect(0, 0, canvas.width, canvas.height);
-  }
+  };
 
   const mouseClick = () => {
-    const canvas = document.getElementById('scrible-root-container_canvas');
+    const canvas = document.getElementById("scrible-root-container_canvas");
     if (canvas) {
-      canvas.classList = 'cursor';
+      canvas.classList = "cursor";
     }
-    setIsActive('mouse_icon');
-  }
+    setIsActive("mouse_icon");
+  };
 
   return (
     <div className={classes.action_bar}>
-      <ul className={classes.icons}>
-        <li className={`${classes.icon} ${isActive === 'pen_icon' ? classes.active : ''}`} title="Pen">
-          <CanvasComponent setIsActive={setIsActive} />
-        </li>
-        <li className={`${classes.icon} ${isActive === 'mouse_icon' ? classes.active : ''}`} onClick={mouseClick} title="Mouse"><FaMouse /></li>
-        <li className={`${classes.icon} ${isActive === 'eraser_icon' ? classes.active : ''}`} onClick={eraseOnCanvas} title="Eraser"><FaEraser /></li>
-        <li className={classes.icon} onClick={clearCanvas} title="Clear Canvas"><MdDelete /></li>
-        <li onClick={handleExit} className={classes.icon} title="Exit"><IoExit /></li>
-        <li>
-          <ColorPalette />
-        </li>
-      </ul>
+      <section className={classes.tools}>
+        <ul className={classes.icons}>
+          <li
+            className={`${classes.icon} ${
+              isActive === "pen_icon" ? classes.active : ""
+            }`}
+            title="Pen"
+          >
+            <CanvasComponent setIsActive={setIsActive} />
+          </li>
+          <li
+            className={`${classes.icon} ${
+              isActive === "mouse_icon" ? classes.active : ""
+            }`}
+            onClick={mouseClick}
+            title="Mouse"
+          >
+            <FaMouse />
+          </li>
+          <li
+            className={`${classes.icon} ${
+              isActive === "eraser_icon" ? classes.active : ""
+            }`}
+            onClick={eraseOnCanvas}
+            title="Eraser"
+          >
+            <FaEraser />
+          </li>
+        </ul>
+      </section>
+      <Separator />
+      <section className={classes.colour}>
+        <ul className={classes.icons}>
+          <li>
+            <ColorPalette />
+          </li>
+        </ul>
+      </section>
+      <Separator />
+      <section className={classes.exit}>
+        <ul className={classes.icons}>
+          <li
+            className={classes.icon}
+            onClick={clearCanvas}
+            title="Clear Canvas"
+          >
+            <MdDelete />
+          </li>
+          <li onClick={handleExit} className={classes.icon} title="Exit">
+            <IoExit />
+          </li>
+        </ul>
+      </section>
     </div>
-  )
-}
+  );
+};
 
 export default ActionBar;

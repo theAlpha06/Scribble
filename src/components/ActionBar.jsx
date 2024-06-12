@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import classes from "./ActionBar.module.css";
 import { FaMouse, FaEraser } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
@@ -6,11 +6,14 @@ import { IoExit } from "react-icons/io5";
 import CanvasComponent from "./Pen.jsx";
 import { iconsUrl } from "./icon.js";
 import ColorPalette from "./ColorPalette/ColorPalette.jsx";
+import ColourPicker from "./ColorPicker/ColorPicker.jsx";
+import { ColorContext } from "../context/colorContext.jsx";
 import Separator from "./Separator/Separator.jsx";
 
 const ActionBar = () => {
   const [isActive, setIsActive] = useState("mouse_icon");
   const canvas = document.getElementById("scrible-root-container_canvas");
+  const { colorName } = useContext(ColorContext);
 
   const eraseOnCanvas = () => {
     setIsActive("eraser_icon");
@@ -122,6 +125,12 @@ const ActionBar = () => {
         <ul className={classes.icons}>
           <li>
             <ColorPalette />
+          </li>
+          <li>
+            <div
+              className={classes.activeColor}
+              style={{ backgroundColor: colorName }}
+            ></div>
           </li>
         </ul>
       </section>

@@ -14,10 +14,10 @@ function ColorPalette() {
 
   return (
     <div className={styles.container}>
-      <div className={`${styles.circle} ${styles.red} ${activeColor === 'red' ? styles.active : ''}`} onClick={() => handleColorSelect('red')}></div>
-      <div className={`${styles.circle} ${styles.green} ${activeColor === 'green' ? styles.active : ''}`} onClick={() => handleColorSelect('green')}></div>
-      <div className={`${styles.circle} ${styles.white} ${activeColor === 'white' ? styles.active : ''}`} onClick={() => handleColorSelect('white')}></div>
-      <div className={`${styles.circle} ${styles.black} ${activeColor === 'black' ? styles.active : ''}`} onClick={() => handleColorSelect('black')}></div>
+      <div className={`${styles.circle} ${styles.red} ${activeColor === '#f00' ? styles.active : ''}`} onClick={() => handleColorSelect('#f00')}></div>
+      <div className={`${styles.circle} ${styles.green} ${activeColor === '#0f0' ? styles.active : ''}`} onClick={() => handleColorSelect('#0f0')}></div>
+      <div className={`${styles.circle} ${styles.white} ${activeColor === '#fff' ? styles.active : ''}`} onClick={() => handleColorSelect('#fff')}></div>
+      <div className={`${styles.circle} ${styles.black} ${activeColor === '#000' ? styles.active : ''}`} onClick={() => handleColorSelect('#000')}></div>
     </div>
   );
 }

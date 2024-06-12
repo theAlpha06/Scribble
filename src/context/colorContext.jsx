@@ -1,13 +1,13 @@
 import React, { createContext, useState, useEffect } from "react";
 
 const ColorContext = createContext({
-  colorName: "white",
+  colorName: "#fff",
   setColorName: () => {}
 });
 
 export const ColorProvider = ({ children }) => {
   const [colorName, setColorName] = useState(() => {
-    return localStorage.getItem("colorName") || "white";
+    return localStorage.getItem("colorName") || "#fff";
   });
 
   useEffect(() => {

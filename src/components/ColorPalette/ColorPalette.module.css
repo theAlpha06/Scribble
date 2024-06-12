@@ -30,9 +30,9 @@
   border: 1px solid white;
 }
 
-.active::after {
+/* .active::after {
   content: '✔'; 
   position: absolute;
   color: yellow; 
   font-size: 15px;
-}
+} */

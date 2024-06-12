@@ -12,6 +12,7 @@ import Separator from "./Separator/Separator.jsx";
 
 const ActionBar = () => {
   const [isActive, setIsActive] = useState("mouse_icon");
+  const [showColorPicker, setShowColorPicker] = useState(false);
   const canvas = document.getElementById("scrible-root-container_canvas");
   const { colorName } = useContext(ColorContext);
 
@@ -130,7 +131,18 @@ const ActionBar = () => {
             <div
               className={classes.activeColor}
               style={{ backgroundColor: colorName }}
+              onClick={() => {
+                setShowColorPicker((prev) => !prev);
+              }}
             ></div>
+            {showColorPicker && (
+              <ColourPicker
+                theme={{
+                  background: '#d4e2ef',
+                  width: "4px",
+                }}
+              />
+            )}
           </li>
         </ul>
       </section>

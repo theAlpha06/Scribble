@@ -15,37 +15,36 @@ const Pen = ({ setIsActive }) => {
       canvas.classList = "pen";
 
       const ctx = canvas.getContext("2d");
-      ctx.lineWidth = 2;
-      ctx.lineCap = "round";
+      ctx.lineWidth = 2; 
+      ctx.lineCap = "round"; 
       ctx.strokeStyle = colorName;
       ctx.globalCompositeOperation = "source-over";
+
       let isDrawing = false;
-      let x, y;
-      const rect = canvas.getBoundingClientRect();
+      let lastX = 0;
+      let lastY = 0;
 
       const startPosition = (e) => {
         isDrawing = true;
-        x = e.clientX - rect.left;
-        y = e.clientY - rect.top;
+        [lastX, lastY] = [e.offsetX, e.offsetY];
         ctx.beginPath();
-        ctx.moveTo(x, y);
-        draw(e);
+        ctx.moveTo(lastX, lastY);
       };
 
       const draw = (e) => {
         if (!isDrawing) return;
 
-        x = e.clientX - rect.left;
-        y = e.clientY - rect.top;
-
-        ctx.strokeStyle = colorName;
-        ctx.lineTo(x, y);
+        const [x, y] = [e.offsetX, e.offsetY];
+        
+        ctx.quadraticCurveTo(lastX, lastY, (x + lastX) / 2, (y + lastY) / 2);
         ctx.stroke();
+        
+        [lastX, lastY] = [x, y];
       };
 
       const endPosition = () => {
         isDrawing = false;
-        ctx.beginPath();
+        ctx.beginPath(); 
       };
 
       canvas.addEventListener("mousedown", startPosition);

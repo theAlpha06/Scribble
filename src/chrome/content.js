@@ -6,7 +6,7 @@ import './styles.css';
 const initializeScribble = () => {
   const containerDiv = document.createElement('div');
   containerDiv.id = 'scrible-root-container';
-  containerDiv.classList = 'scribble-root-container';
+  containerDiv.classList.add('scribble-root-container');
   document.body.appendChild(containerDiv);
 
   const canvasDiv = document.createElement('canvas');
@@ -16,22 +16,25 @@ const initializeScribble = () => {
   document.body.insertBefore(canvasDiv, document.body.firstChild);
 
   let isDragging = false;
-  let offsetX, offsetY;
+  let offsetX, offsetY, offsetZ;
 
   function handleMouseDown(event) {
     isDragging = true;
     offsetX = event.clientX - containerDiv.getBoundingClientRect().left;
     offsetY = event.clientY - containerDiv.getBoundingClientRect().top;
+    offsetZ = event.clientX - containerDiv.getBoundingClientRect().right;
   }
-
+  
   function handleMouseMove(event) {
     if (!isDragging) return;
-
+    
     const newLeft = event.clientX - offsetX;
     const newTop = event.clientY - offsetY;
-
+    const newRight = event.clientX - offsetZ;
+    
     containerDiv.style.left = `${newLeft}px`;
     containerDiv.style.top = `${newTop}px`;
+    containerDiv.style.width = `${newRight - newLeft}px`;
   }
 
   function handleMouseUp() {

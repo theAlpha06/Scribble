@@ -3,6 +3,7 @@ import classes from "./ActionBar.module.css";
 import CanvasComponent from "./Pen.jsx";
 import { iconsUrl } from "./icon.js";
 import ColorPalette from "./ColorPalette/ColorPalette.jsx";
+import { setupCanvas } from "./Pen.jsx";
 import KeyboardListener from "../utils/hotkeys.jsx";
 import ColourPicker from "./ColorPicker/ColorPicker.jsx";
 import { ColorContext } from "../context/colorContext.jsx";
@@ -20,9 +21,8 @@ const ActionBar = () => {
   const canvas = document.getElementById("scrible-root-container_canvas");
   const { colorName } = useContext(ColorContext);
 
-  // TODO: Need to fix this!!!
   const setToolToPen = () => {
-    setIsActive("pen_icon");
+    setupCanvas(setIsActive, colorName);
   };
 
   const setToolToEraser = () => {

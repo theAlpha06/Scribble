@@ -1,14 +1,17 @@
 import React, { useState, useContext } from "react";
 import classes from "./ActionBar.module.css";
-import { FaMouse, FaEraser } from "react-icons/fa";
-import { MdDelete } from "react-icons/md";
-import { IoExit } from "react-icons/io5";
 import CanvasComponent from "./Pen.jsx";
 import { iconsUrl } from "./icon.js";
 import ColorPalette from "./ColorPalette/ColorPalette.jsx";
 import ColourPicker from "./ColorPicker/ColorPicker.jsx";
 import { ColorContext } from "../context/colorContext.jsx";
 import Separator from "./Separator/Separator.jsx";
+import { FiMinimize } from "react-icons/fi";
+import { BsTextareaT } from "react-icons/bs";
+import { FaCameraRetro } from "react-icons/fa";
+import { IoExit } from "react-icons/io5";
+import { MdDelete } from "react-icons/md";
+import { FaMouse, FaEraser } from "react-icons/fa";
 
 const ActionBar = () => {
   const [isActive, setIsActive] = useState("mouse_icon");
@@ -68,6 +71,32 @@ const ActionBar = () => {
     return cleanup;
   };
 
+  const textOnCanvas = () => {
+    setIsActive("text_icon");
+    canvas.style.cursor = "text";
+    canvas.classList = "text";
+  };
+
+  const handleScreenshot = () => {
+    const canvas = document.getElementById("scrible-root-container_canvas");
+    const image = canvas
+      .toDataURL("image/png")
+      .replace("image/png", "image/octet-stream");
+    const downloadLink = document.createElement("a");
+    downloadLink.href = image;
+    downloadLink.download = "canvas_image.png";
+    downloadLink.innerHTML = "Download Image";
+    downloadLink.click();
+  };
+
+  const handleMinimize = () => {
+    // const containerDiv = document.getElementById("scrible-root-container");
+    // if(containerDiv) {
+    //   containerDiv.remove();
+    // }
+    alert("Coming Soon!");
+  };
+
   const handleExit = () => {
     const actionContainer = document.getElementById("scrible-root-container");
     const canvas = document.getElementById("scrible-root-container_canvas");
@@ -100,6 +129,15 @@ const ActionBar = () => {
             title="Pen"
           >
             <CanvasComponent setIsActive={setIsActive} />
+          </li>
+          <li
+            className={`${classes.icon} ${
+              isActive === "text_icon" ? classes.active : ""
+            }`}
+            onClick={textOnCanvas}
+            title="Text"
+          >
+            <BsTextareaT />
           </li>
           <li
             className={`${classes.icon} ${
@@ -138,7 +176,7 @@ const ActionBar = () => {
             {showColorPicker && (
               <ColourPicker
                 theme={{
-                  background: '#d4e2ef',
+                  background: "#d4e2ef",
                   width: "4px",
                 }}
               />
@@ -150,13 +188,31 @@ const ActionBar = () => {
       <section className={classes.exit}>
         <ul className={classes.icons}>
           <li
-            className={classes.icon}
+            className={`${classes.icon} ${classes.gridItem}`}
             onClick={clearCanvas}
             title="Clear Canvas"
           >
             <MdDelete />
           </li>
-          <li onClick={handleExit} className={classes.icon} title="Exit">
+          <li
+            className={`${classes.icon} ${classes.gridItem}`}
+            onClick={handleScreenshot}
+            title="Save canvas"
+          >
+            <FaCameraRetro />
+          </li>
+          <li
+            onClick={handleMinimize}
+            className={`${classes.icon} ${classes.gridItem}`}
+            title="Hide Toolbar - Coming Soon!"
+          >
+            <FiMinimize />
+          </li>
+          <li
+            className={`${classes.icon} ${classes.gridItem}`}
+            onClick={handleExit}
+            title="Exit"
+          >
             <IoExit />
           </li>
         </ul>

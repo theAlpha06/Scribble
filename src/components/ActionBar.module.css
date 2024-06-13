@@ -9,23 +9,26 @@
   gap: 0.5rem;
 }
 
-.tools, .colour, .exit {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
 .icons {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-  text-decoration: none;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); 
+  gap: 7px;
   list-style: none;
   margin: 0;
   padding: 0;
 }
+
 .icons > li {
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 3px;
+}
+
+.icon {
+  font-size: 1.3rem;
 }
 
 .activeColor {
@@ -34,11 +37,10 @@
   border-radius: 2px;
   border: 1px solid black;
 }
+.active {
+  color: #ff0000;
+}
 .icon {
   font-size: 1.3rem;
   cursor: pointer;
-}
-
-.active {
-  color: #ff0000;
 }

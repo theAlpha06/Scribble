@@ -24,6 +24,6 @@
   cursor: default;
 }
 
-.pen, .eraser {
+.pen, .eraser, .text {
   pointer-events: auto;
 }

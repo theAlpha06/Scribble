@@ -2,13 +2,13 @@
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   grid-template-rows: repeat(2, 1fr);
-  gap: 6px;
+  gap: 5px;
 }
 
 .circle {
   border-radius: 50%;
-  width: 20px;
-  height: 20px; 
+  width: 17px;
+  height: 17px; 
   display: flex;
   justify-content: center;
   align-items: center;

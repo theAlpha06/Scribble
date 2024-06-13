@@ -1,7 +1,8 @@
 .action_bar {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
+  width: fit-content;
   border-radius: 1rem;
   padding: 0.5rem;
   background-color: #d4e2ef;

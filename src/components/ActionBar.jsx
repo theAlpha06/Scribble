@@ -3,6 +3,7 @@ import classes from "./ActionBar.module.css";
 import CanvasComponent from "./Pen.jsx";
 import { iconsUrl } from "./icon.js";
 import ColorPalette from "./ColorPalette/ColorPalette.jsx";
+import KeyboardListener from "../utils/hotkeys.jsx";
 import ColourPicker from "./ColorPicker/ColorPicker.jsx";
 import { ColorContext } from "../context/colorContext.jsx";
 import Separator from "./Separator/Separator.jsx";
@@ -18,6 +19,21 @@ const ActionBar = () => {
   const [showColorPicker, setShowColorPicker] = useState(false);
   const canvas = document.getElementById("scrible-root-container_canvas");
   const { colorName } = useContext(ColorContext);
+
+  // TODO: Need to fix this!!!
+  const setToolToPen = () => {
+    setIsActive("pen_icon");
+  };
+
+  const setToolToEraser = () => {
+    setIsActive("eraser_icon");
+    eraseOnCanvas();
+  };
+
+  const setToolToMouse = () => {
+    setIsActive("mouse_icon");
+    mouseClick();
+  };
 
   const eraseOnCanvas = () => {
     setIsActive("eraser_icon");
@@ -120,6 +136,14 @@ const ActionBar = () => {
 
   return (
     <div className={classes.action_bar}>
+      <KeyboardListener
+        setToolToPen={setToolToPen}
+        setToolToEraser={setToolToEraser}
+        setToolToMouse={setToolToMouse}
+        handleScreenshot={handleScreenshot}
+        handleExit={handleExit}
+        clearCanvas={clearCanvas}
+      />
       <section className={classes.tools}>
         <ul className={classes.icons}>
           <li

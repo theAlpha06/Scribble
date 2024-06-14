@@ -150,7 +150,7 @@ const ActionBar = () => {
             className={`${classes.icon} ${
               isActive === "pen_icon" ? classes.active : ""
             }`}
-            title="Pen"
+            title="Pen | Ctrl + Shift + 1"
           >
             <CanvasComponent setIsActive={setIsActive} isActive={isActive}/>
           </li>
@@ -168,7 +168,7 @@ const ActionBar = () => {
               isActive === "mouse_icon" ? classes.active : ""
             }`}
             onClick={mouseClick}
-            title="Mouse"
+            title="Mouse | Ctrl + Shift + 3"
           >
             <FaMouse />
           </li>
@@ -177,7 +177,7 @@ const ActionBar = () => {
               isActive === "eraser_icon" ? classes.active : ""
             }`}
             onClick={eraseOnCanvas}
-            title="Eraser"
+            title="Eraser | Ctrl + Shift + 2"
           >
             <FaEraser />
           </li>
@@ -214,14 +214,14 @@ const ActionBar = () => {
           <li
             className={`${classes.icon} ${classes.gridItem}`}
             onClick={clearCanvas}
-            title="Clear Canvas"
+            title="Clear Canvas | Ctrl + Shift + 5"
           >
             <MdDelete />
           </li>
           <li
             className={`${classes.icon} ${classes.gridItem}`}
             onClick={handleScreenshot}
-            title="Save canvas"
+            title="Save canvas | Ctrl + Shift + 4"
           >
             <FaCameraRetro />
           </li>
@@ -235,7 +235,7 @@ const ActionBar = () => {
           <li
             className={`${classes.icon} ${classes.gridItem}`}
             onClick={handleExit}
-            title="Exit"
+            title="Exit | Ctrl + Shift + 6"
           >
             <IoExit />
           </li>

@@ -56,13 +56,14 @@ export const setupCanvas = (setIsActive, colorName) => {
   }
 };
 
-const Pen = ({ setIsActive }) => {
+const Pen = ({ setIsActive, isActive }) => {
   const { colorName } = useContext(ColorContext);
-
-  useEffect(() => {
-    const cleanup = setupCanvas(setIsActive, colorName);
-    return cleanup;
-  }, [colorName]); // Re-run when setIsActive or colorName changes
+  if (isActive == "pen_icon") {
+    useEffect(() => {
+      const mountCanvas = setupCanvas(setIsActive, colorName);
+      return mountCanvas;
+    }, [colorName, setIsActive]);
+  }
 
   return <FaPen onClick={() => setupCanvas(setIsActive, colorName)} />;
 };

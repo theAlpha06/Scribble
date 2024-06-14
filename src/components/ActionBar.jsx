@@ -152,7 +152,7 @@ const ActionBar = () => {
             }`}
             title="Pen"
           >
-            <CanvasComponent setIsActive={setIsActive} />
+            <CanvasComponent setIsActive={setIsActive} isActive={isActive}/>
           </li>
           <li
             className={`${classes.icon} ${

@@ -13,6 +13,7 @@ const initializeScribble = () => {
   canvasDiv.id = "scrible-root-container_canvas";
   canvasDiv.width = document.body.clientWidth;
   canvasDiv.height = document.body.clientHeight;
+  canvasDiv.classList = "cursor";
   document.body.insertBefore(canvasDiv, document.body.firstChild);
 
   let isDragging = false;

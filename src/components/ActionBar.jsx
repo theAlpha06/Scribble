@@ -106,11 +106,10 @@ const ActionBar = () => {
   };
 
   const handleMinimize = () => {
-    // const containerDiv = document.getElementById("scrible-root-container");
-    // if(containerDiv) {
-    //   containerDiv.remove();
-    // }
-    alert("Coming Soon!");
+    const containerDiv = document.getElementById("scrible-root-container");
+    if(containerDiv) {
+      containerDiv.style.display = "none";
+    }
   };
 
   const handleExit = () => {

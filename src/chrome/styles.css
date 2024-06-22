@@ -1,5 +1,6 @@
 .scribble-root-container {
   position: fixed;
+  display: block;
   top: 20px;
   right: 20px;
   z-index: 9999;

@@ -52,4 +52,7 @@ const initializeScribble = () => {
 
 if (!document.getElementById("scrible-root-container")) {
   initializeScribble();
+} else {
+  const containerDiv = document.getElementById("scrible-root-container");
+  containerDiv.style.display = "block";
 }

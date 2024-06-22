@@ -2,15 +2,22 @@ import React, { useContext, useEffect } from "react";
 import { FaPen } from "react-icons/fa";
 import { iconsUrl } from "./icon.js";
 import { ColorContext } from "../context/colorContext.jsx";
+import { tintCursorImageRed } from "../utils/invertIcon.jsx";
 
 export const setupCanvas = (setIsActive, colorName) => {
   const canvas = document.getElementById("scrible-root-container_canvas");
 
   setIsActive("pen_icon");
   if (canvas) {
-    canvas.style.cursor = `url(${iconsUrl.pen}) 0 35, auto`;
+    tintCursorImageRed(iconsUrl.pen)
+      .then((reddishCursorUrl) => {
+        canvas.style.cursor = `url(${reddishCursorUrl}) 0 35, auto`;
+      })
+      .catch((error) => {
+        console.error("Error tinting cursor image:", error);
+      });
     canvas.classList = "pen";
-    
+
     const ctx = canvas.getContext("2d");
     ctx.lineWidth = 2;
     ctx.lineCap = "round";
@@ -41,15 +48,14 @@ export const setupCanvas = (setIsActive, colorName) => {
 
     const endPosition = () => {
       isDrawing = false;
-      ctx.closePath(); 
+      ctx.closePath();
     };
 
     canvas.addEventListener("mousedown", startPosition);
     canvas.addEventListener("mouseup", endPosition);
     canvas.addEventListener("mousemove", draw);
-    canvas.addEventListener("mouseout", endPosition); 
+    canvas.addEventListener("mouseout", endPosition);
 
-   
     return () => {
       canvas.removeEventListener("mousedown", startPosition);
       canvas.removeEventListener("mouseup", endPosition);
@@ -64,7 +70,7 @@ const Pen = ({ setIsActive, isActive }) => {
   if (isActive === "pen_icon") {
     useEffect(() => {
       const cleanupCanvas = setupCanvas(setIsActive, colorName);
-      return cleanupCanvas; 
+      return cleanupCanvas;
     }, [colorName, setIsActive]);
   }
 

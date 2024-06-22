@@ -10,20 +10,25 @@ export const setupCanvas = (setIsActive, colorName) => {
   if (canvas) {
     canvas.style.cursor = `url(${iconsUrl.pen}) 0 35, auto`;
     canvas.classList = "pen";
-
+    
     const ctx = canvas.getContext("2d");
+    console.log(ctx);
     ctx.lineWidth = 2;
     ctx.lineCap = "round";
+    ctx.lineJoin = "round";
     ctx.strokeStyle = colorName;
     ctx.globalCompositeOperation = "source-over";
 
     let isDrawing = false;
     let lastX = 0;
     let lastY = 0;
+    let startX = 0;
+    let startY = 0;
 
     const startPosition = (e) => {
       isDrawing = true;
-      [lastX, lastY] = [e.offsetX, e.offsetY];
+      [startX, startY] = [e.offsetX, e.offsetY];
+      [lastX, lastY] = [startX, startY];
       ctx.beginPath();
       ctx.moveTo(lastX, lastY);
     };
@@ -33,13 +38,23 @@ export const setupCanvas = (setIsActive, colorName) => {
 
       const [x, y] = [e.offsetX, e.offsetY];
 
-      ctx.lineTo(lastX, lastY);
+      ctx.beginPath();
+      ctx.moveTo(lastX, lastY);
+      // Using quadraticCurveTo for smoother lines
+      ctx.quadraticCurveTo(lastX, lastY, (lastX + x) / 2, (lastY + y) / 2);
       ctx.stroke();
 
       [lastX, lastY] = [x, y];
     };
 
     const endPosition = () => {
+      if (isDrawing) {
+        // Draw the final segment of the curve
+        ctx.beginPath();
+        ctx.moveTo(lastX, lastY);
+        ctx.lineTo(lastX, lastY);
+        ctx.stroke();
+      }
       isDrawing = false;
       ctx.beginPath();
     };

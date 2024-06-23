@@ -3,6 +3,7 @@ import { FaPen } from "react-icons/fa";
 import { iconsUrl } from "./icon.js";
 import { ColorContext } from "../context/colorContext.jsx";
 import { tintCursorImageRed } from "../utils/invertIcon.jsx";
+import { saveCanvasToLocalStorage, loadCanvasFromLocalStorage } from "../utils/saveCanvas.jsx";
 
 export const setupCanvas = (setIsActive, colorName) => {
   const canvas = document.getElementById("scrible-root-container_canvas");
@@ -20,7 +21,7 @@ export const setupCanvas = (setIsActive, colorName) => {
       });
 
     const ctx = canvas.getContext("2d");
-    ctx.lineWidth = 2;
+    ctx.lineWidth = 1;
     ctx.lineCap = "round";
     ctx.lineJoin = "round";
     ctx.strokeStyle = colorName;
@@ -34,6 +35,8 @@ export const setupCanvas = (setIsActive, colorName) => {
       isDrawing = true;
       [lastX, lastY] = [e.offsetX, e.offsetY];
       ctx.beginPath();
+      ctx.shadowBlur = 1;
+      ctx.shadowColor = colorName;
       ctx.moveTo(lastX, lastY);
     };
 
@@ -41,6 +44,7 @@ export const setupCanvas = (setIsActive, colorName) => {
       if (!isDrawing) return;
 
       const [x, y] = [e.offsetX, e.offsetY];
+
       ctx.lineTo(x, y);
       ctx.stroke();
 
@@ -50,6 +54,7 @@ export const setupCanvas = (setIsActive, colorName) => {
     const endPosition = () => {
       isDrawing = false;
       ctx.closePath();
+      saveCanvasToLocalStorage(canvas);
     };
 
     canvas.addEventListener("mousedown", startPosition);
@@ -57,23 +62,30 @@ export const setupCanvas = (setIsActive, colorName) => {
     canvas.addEventListener("mousemove", draw);
     canvas.addEventListener("mouseout", endPosition);
 
+    loadCanvasFromLocalStorage(canvas);
+
+    const handleBeforeUnload = () => saveCanvasToLocalStorage(canvas);
+    window.addEventListener("beforeunload", handleBeforeUnload);
+
     return () => {
       canvas.removeEventListener("mousedown", startPosition);
       canvas.removeEventListener("mouseup", endPosition);
       canvas.removeEventListener("mousemove", draw);
       canvas.removeEventListener("mouseout", endPosition);
+      window.removeEventListener("beforeunload", handleBeforeUnload);
     };
   }
 };
 
 const Pen = ({ setIsActive, isActive }) => {
   const { colorName } = useContext(ColorContext);
-  if (isActive === "pen_icon") {
-    useEffect(() => {
+
+  useEffect(() => {
+    if (isActive === "pen_icon") {
       const cleanupCanvas = setupCanvas(setIsActive, colorName);
       return cleanupCanvas;
-    }, [colorName, setIsActive]);
-  }
+    }
+  }, [colorName, setIsActive, isActive]);
 
   return <FaPen onClick={() => setupCanvas(setIsActive, colorName)} />;
 };

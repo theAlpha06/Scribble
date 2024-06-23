@@ -9,6 +9,8 @@ export const setupCanvas = (setIsActive, colorName) => {
 
   setIsActive("pen_icon");
   if (canvas) {
+    canvas.style.cursor = `url(${iconsUrl.pen}) 0 35, auto`;
+    canvas.classList = "pen";
     tintCursorImageRed(iconsUrl.pen)
       .then((reddishCursorUrl) => {
         canvas.style.cursor = `url(${reddishCursorUrl}) 0 35, auto`;
@@ -16,7 +18,6 @@ export const setupCanvas = (setIsActive, colorName) => {
       .catch((error) => {
         console.error("Error tinting cursor image:", error);
       });
-    canvas.classList = "pen";
 
     const ctx = canvas.getContext("2d");
     ctx.lineWidth = 2;
@@ -26,39 +27,29 @@ export const setupCanvas = (setIsActive, colorName) => {
     ctx.globalCompositeOperation = "source-over";
 
     let isDrawing = false;
-    let points = []; 
+    let lastX = 0;
+    let lastY = 0;
 
     const startPosition = (e) => {
       isDrawing = true;
-      points = [{ x: e.offsetX, y: e.offsetY }];
+      [lastX, lastY] = [e.offsetX, e.offsetY];
       ctx.beginPath();
-      ctx.moveTo(points[0].x, points[0].y);
+      ctx.moveTo(lastX, lastY);
     };
 
     const draw = (e) => {
       if (!isDrawing) return;
 
-      points.push({ x: e.offsetX, y: e.offsetY });
+      const [x, y] = [e.offsetX, e.offsetY];
+      ctx.lineTo(x, y);
+      ctx.stroke();
 
-      if (points.length >= 4) {
-        const [p0, p1, p2, p3] = points;
-
-        
-        points = [p3];
-        ctx.bezierCurveTo(p1.x, p1.y, p2.x, p2.y, p3.x, p3.y);
-        ctx.stroke();
-      }
+      [lastX, lastY] = [x, y];
     };
 
     const endPosition = () => {
       isDrawing = false;
-      if (points.length >= 4) {
-        const [p0, p1, p2, p3] = points;
-        ctx.bezierCurveTo(p1.x, p1.y, p2.x, p2.y, p3.x, p3.y);
-        ctx.stroke();
-      }
       ctx.closePath();
-      points = [];
     };
 
     canvas.addEventListener("mousedown", startPosition);

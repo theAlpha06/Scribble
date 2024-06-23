@@ -26,29 +26,39 @@ export const setupCanvas = (setIsActive, colorName) => {
     ctx.globalCompositeOperation = "source-over";
 
     let isDrawing = false;
-    let lastX = 0;
-    let lastY = 0;
+    let points = []; 
 
     const startPosition = (e) => {
       isDrawing = true;
-      [lastX, lastY] = [e.offsetX, e.offsetY];
+      points = [{ x: e.offsetX, y: e.offsetY }];
       ctx.beginPath();
-      ctx.moveTo(lastX, lastY);
+      ctx.moveTo(points[0].x, points[0].y);
     };
 
     const draw = (e) => {
       if (!isDrawing) return;
 
-      const [x, y] = [e.offsetX, e.offsetY];
-      ctx.lineTo(x, y);
-      ctx.stroke();
+      points.push({ x: e.offsetX, y: e.offsetY });
 
-      [lastX, lastY] = [x, y];
+      if (points.length >= 4) {
+        const [p0, p1, p2, p3] = points;
+
+        
+        points = [p3];
+        ctx.bezierCurveTo(p1.x, p1.y, p2.x, p2.y, p3.x, p3.y);
+        ctx.stroke();
+      }
     };
 
     const endPosition = () => {
       isDrawing = false;
+      if (points.length >= 4) {
+        const [p0, p1, p2, p3] = points;
+        ctx.bezierCurveTo(p1.x, p1.y, p2.x, p2.y, p3.x, p3.y);
+        ctx.stroke();
+      }
       ctx.closePath();
+      points = [];
     };
 
     canvas.addEventListener("mousedown", startPosition);

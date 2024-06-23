@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import ColorPicker from "react-pick-color";
+import { SketchPicker } from "react-color";
 import { ColorContext } from "../../context/colorContext.jsx";
 import classes from "./ColorPicker.module.css";
 
@@ -9,7 +9,10 @@ const ColourPicker = () => {
 
   return (
     <div className={classes.container}>
-      <ColorPicker color={color} onChange={(color) => setColorName(color.hex)} />
+      <SketchPicker
+        color={color}
+        onChange={(color) => setColorName(color.hex)}
+      />
     </div>
   );
 };

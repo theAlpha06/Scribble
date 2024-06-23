@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useRef, useEffect } from "react";
 import classes from "./ActionBar.module.css";
 import CanvasComponent from "./Pen.jsx";
 import { iconsUrl } from "./icon.js";
@@ -18,8 +18,10 @@ import { FaMouse, FaEraser } from "react-icons/fa";
 const ActionBar = () => {
   const [isActive, setIsActive] = useState("mouse_icon");
   const [showColorPicker, setShowColorPicker] = useState(false);
-  const canvas = document.getElementById("scrible-root-container_canvas");
   const { colorName } = useContext(ColorContext);
+  const canvas = document.getElementById("scrible-root-container_canvas");
+  
+  const colorPickerRef = useRef(null); 
 
   const setToolToPen = () => {
     setupCanvas(setIsActive, colorName);
@@ -94,7 +96,6 @@ const ActionBar = () => {
   };
 
   const handleScreenshot = () => {
-    const canvas = document.getElementById("scrible-root-container_canvas");
     const image = canvas
       .toDataURL("image/png")
       .replace("image/png", "image/octet-stream");
@@ -114,24 +115,39 @@ const ActionBar = () => {
 
   const handleExit = () => {
     const actionContainer = document.getElementById("scrible-root-container");
-    const canvas = document.getElementById("scrible-root-container_canvas");
     canvas?.remove();
     actionContainer?.remove();
   };
 
   const clearCanvas = () => {
-    const canvas = document.getElementById("scrible-root-container_canvas");
     const ctx = canvas?.getContext("2d");
     ctx?.clearRect(0, 0, canvas.width, canvas.height);
   };
 
   const mouseClick = () => {
-    const canvas = document.getElementById("scrible-root-container_canvas");
     if (canvas) {
       canvas.classList = "cursor";
     }
     setIsActive("mouse_icon");
   };
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (colorPickerRef.current && !colorPickerRef.current.contains(event.target)) {
+        setShowColorPicker(false);
+      }
+    };
+
+    if (showColorPicker) {
+      document.addEventListener("mousedown", handleClickOutside);
+    } else {
+      document.removeEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [showColorPicker]);
 
   return (
     <div className={classes.action_bar}>
@@ -151,7 +167,7 @@ const ActionBar = () => {
             }`}
             title="Pen | Ctrl + Shift + 1"
           >
-            <CanvasComponent setIsActive={setIsActive} isActive={isActive}/>
+            <CanvasComponent setIsActive={setIsActive} isActive={isActive} />
           </li>
           <li
             className={`${classes.icon} ${
@@ -197,12 +213,14 @@ const ActionBar = () => {
               }}
             ></div>
             {showColorPicker && (
-              <ColourPicker
-                theme={{
-                  background: "#d4e2ef",
-                  width: "4px",
-                }}
-              />
+              <div ref={colorPickerRef}>
+                <ColourPicker
+                  theme={{
+                    background: "#d4e2ef",
+                    width: "4px",
+                  }}
+                />
+              </div>
             )}
           </li>
         </ul>

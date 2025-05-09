@@ -9,13 +9,17 @@
   gap: 0.5rem;
 }
 
-.icons {
+.icons, .icons_controls {
   display: grid;
   grid-template-columns: repeat(2, 1fr); 
   gap: 7px;
   list-style: none;
   margin: 0;
   padding: 0;
+}
+
+.icons_controls {
+  grid-template-columns: repeat(3, 1fr); 
 }
 
 .icons > li {

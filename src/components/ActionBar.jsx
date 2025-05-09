@@ -13,18 +13,40 @@ import { BsTextareaT } from "react-icons/bs";
 import { FaCameraRetro } from "react-icons/fa";
 import { IoExit } from "react-icons/io5";
 import { MdDelete } from "react-icons/md";
+import { IoArrowUndoSharp } from "react-icons/io5";
+import { IoArrowRedoSharp } from "react-icons/io5";
 import { FaMouse, FaEraser } from "react-icons/fa";
 
 const ActionBar = () => {
   const [isActive, setIsActive] = useState("mouse_icon");
+  const [restoreArray, setRestoreArray] = useState([]);
+  const [index, setIndex] = useState(-1);
   const [showColorPicker, setShowColorPicker] = useState(false);
   const { colorName } = useContext(ColorContext);
   const canvas = document.getElementById("scrible-root-container_canvas");
-  
-  const colorPickerRef = useRef(null); 
+  const ctx = canvas.getContext("2d", { willReadFrequently: true });
+
+  const colorPickerRef = useRef(null);
 
   const setToolToPen = () => {
     setupCanvas(setIsActive, colorName);
+  };
+
+  const handleUndo = () => {
+    if (index >= 0) {
+      setIndex((prevIndex) => prevIndex - 1);
+      if (index === 0) {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+      } else if (index > 0) {
+        ctx.putImageData(restoreArray[index - 1], 0, 0);
+      }
+    }
+  };
+  const handleRedo = () => {
+    if (index < restoreArray.length - 1) {
+      setIndex((prevIndex) => prevIndex + 1);
+      ctx.putImageData(restoreArray[index + 1], 0, 0);
+    }
   };
 
   const setToolToEraser = () => {
@@ -108,7 +130,7 @@ const ActionBar = () => {
 
   const handleMinimize = () => {
     const containerDiv = document.getElementById("scrible-root-container");
-    if(containerDiv) {
+    if (containerDiv) {
       containerDiv.style.display = "none";
     }
   };
@@ -133,7 +155,10 @@ const ActionBar = () => {
 
   useEffect(() => {
     const handleClickOutside = (event) => {
-      if (colorPickerRef.current && !colorPickerRef.current.contains(event.target)) {
+      if (
+        colorPickerRef.current &&
+        !colorPickerRef.current.contains(event.target)
+      ) {
         setShowColorPicker(false);
       }
     };
@@ -167,7 +192,12 @@ const ActionBar = () => {
             }`}
             title="Pen | Ctrl + Shift + 1"
           >
-            <CanvasComponent setIsActive={setIsActive} isActive={isActive} />
+            <CanvasComponent
+              setIsActive={setIsActive}
+              isActive={isActive}
+              setRestoreArray={setRestoreArray}
+              setIndex={setIndex}
+            />
           </li>
           <li
             className={`${classes.icon} ${
@@ -227,7 +257,21 @@ const ActionBar = () => {
       </section>
       <Separator />
       <section className={classes.exit}>
-        <ul className={classes.icons}>
+        <ul className={classes.icons_controls}>
+          <li
+            className={`${classes.icon} ${classes.gridItem}`}
+            onClick={handleUndo}
+            title="Undo"
+          >
+            <IoArrowUndoSharp />
+          </li>
+          <li
+            className={`${classes.icon} ${classes.gridItem}`}
+            onClick={handleRedo}
+            title="Redo"
+          >
+            <IoArrowRedoSharp />
+          </li>
           <li
             className={`${classes.icon} ${classes.gridItem}`}
             onClick={clearCanvas}
